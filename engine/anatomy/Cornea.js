@@ -1,46 +1,50 @@
 import Drawable from "./Drawable.js";
 import Theme from "../../config/Theme.js";
 
-export default class Cornea extends Drawable {
+export default class Cornea extends Drawable{
 
-    constructor() {
+    constructor(svg){
 
-        super("path");
+        super(svg,"path");
 
         this.set({
 
-            fill: "none",
+            fill:"none",
 
-            stroke: Theme.colors.blue,
+            stroke:Theme.colors.blue,
 
-            "stroke-width": Theme.strokes.cornea
+            "stroke-width":Theme.strokes.cornea,
+
+            "stroke-linecap":"round"
 
         });
 
     }
 
-    update(model) {
+    update(model){
 
-        const x = model.sclera.front;
+        const x = model.eye.front;
 
         const y = model.center.y;
 
-        const r = model.cornea.radius;
-
         const p = model.cornea.protrusion;
 
-        const d = `
+        const r = model.cornea.radius;
 
-            M ${x} ${y}
+        this.set({
 
-            C
-            ${x+p} ${y-r}
-            ${x+p} ${y+r}
-            ${x} ${y}
+            d:`
 
-        `;
+M ${x} ${y}
 
-        this.set({ d });
+C
+${x+p} ${y-r}
+${x+p} ${y+r}
+${x} ${y}
+
+`
+
+        });
 
     }
 

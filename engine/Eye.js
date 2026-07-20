@@ -1,6 +1,7 @@
 import EyeModel from "../EyeModel.js";
 import EyeGeometry from "./geometry/EyeGeometry.js";
-import Anatomy from "./renderers/AnatomyRenderer.js";
+import AnatomyRenderer from "./renderers/AnatomyRenderer.js";
+import OpticalEngine from "./optics/OpticalEngine.js";
 
 export default class Eye {
 
@@ -8,19 +9,36 @@ export default class Eye {
 
         this.svg = svg;
 
+        // Core model
         this.model = new EyeModel();
 
+        // Derived geometry
         this.geometry = new EyeGeometry();
 
-        this.anatomy = new Anatomy(svg);
+        // Optical engine
+        this.optics = new OpticalEngine();
+
+        // Anatomy renderer
+        this.anatomy = new AnatomyRenderer(svg);
 
     }
 
     update() {
 
+        // 1. Update derived geometry
         this.geometry.update(this.model);
 
-        this.anatomy.update(this.model, this.geometry);
+        // 2. Update optical engine
+        this.optics.update(
+            this.model,
+            this.geometry
+        );
+
+        // 3. Render anatomy
+        this.anatomy.update(
+            this.model,
+            this.geometry
+        );
 
     }
 

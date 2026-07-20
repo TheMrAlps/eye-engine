@@ -1,35 +1,34 @@
-import EyeModel from "./EyeModel.js";
-import Anatomy from "./anatomy/Anatomy.js";
+import EyeModel from "../EyeModel.js";
+import EyeGeometry from "./geometry/EyeGeometry.js";
+import Anatomy from "./renderers/AnatomyRenderer.js";
 
 export default class Eye {
 
-    constructor(svg){
+    constructor(svg) {
 
         this.svg = svg;
 
         this.model = new EyeModel();
 
+        this.geometry = new EyeGeometry();
+
         this.anatomy = new Anatomy(svg);
 
     }
 
-    draw(){
+    update() {
 
-        this.anatomy.update(this.model);
+        this.geometry.update(this.model);
 
-    }
-
-    update(){
-
-        this.draw();
+        this.anatomy.update(this.model, this.geometry);
 
     }
 
-    reset(){
+    reset() {
 
         this.model.reset();
 
-        this.draw();
+        this.update();
 
     }
 

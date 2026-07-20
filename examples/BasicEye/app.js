@@ -1,9 +1,7 @@
 import Eye from "../../engine/Eye.js";
 
-const svg =
-document.getElementById("eye");
+const svg = document.getElementById("eye");
 
-const eye =
-new Eye(svg);
+const eye = new Eye(svg);
 
-eye.draw();
+eye.update();

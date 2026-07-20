@@ -1,0 +1,33 @@
+import Sclera from "./ScleraRenderer.js";
+import Cornea from "./CorneaRenderer.js";
+import Iris from "./IrisRenderer.js";
+import Pupil from "./PupilRenderer.js";
+import Lens from "./LensRenderer.js";
+
+export default class Anatomy {
+
+    constructor(svg) {
+
+        this.parts = [
+
+            new Sclera(svg),
+            new Cornea(svg),
+            new Iris(svg),
+            new Pupil(svg),
+            new Lens(svg)
+
+        ];
+
+    }
+
+  update(model, geometry) {
+
+    for (const part of this.parts) {
+
+        part.update(model, geometry);
+
+    }
+
+}
+
+}

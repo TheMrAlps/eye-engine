@@ -4,7 +4,14 @@ export default class CorneaSurface extends Surface {
 
     constructor() {
 
-        super("Anterior Cornea");
+        super({
+
+            name: "Anterior Cornea",
+
+            nBefore: 1.000,
+            nAfter: 1.376
+
+        });
 
     }
 
@@ -21,7 +28,7 @@ export default class CorneaSurface extends Surface {
         const dy = ray.direction.y;
 
         // Solve:
-        // (ox + dx*t - cx)² + (oy + dy*t - cy)² = r²
+        // (ox + dx*t - cx)^2 + (oy + dy*t - cy)^2 = r^2
 
         const a = dx * dx + dy * dy;
 
@@ -38,9 +45,7 @@ export default class CorneaSurface extends Surface {
         const discriminant = b * b - 4 * a * c;
 
         if (discriminant < 0) {
-
             return null;
-
         }
 
         const sqrt = Math.sqrt(discriminant);
@@ -51,28 +56,18 @@ export default class CorneaSurface extends Surface {
         let t = null;
 
         if (t1 > 0 && t2 > 0) {
-
             t = Math.min(t1, t2);
-
         } else if (t1 > 0) {
-
             t = t1;
-
         } else if (t2 > 0) {
-
             t = t2;
-
         } else {
-
             return null;
-
         }
 
         return {
-
             x: ox + dx * t,
             y: oy + dy * t
-
         };
 
     }

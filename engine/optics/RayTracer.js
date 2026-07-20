@@ -1,14 +1,8 @@
 import Ray from "./Ray.js";
 import OpticalScene from "./OpticalScene.js";
-import CorneaSurface from "./CorneaSurface.js";
+import Snell from "./Snell.js";
 
 export default class RayTracer {
-
-    constructor() {
-
-        this.cornea = new CorneaSurface();
-
-    }
 
     trace(model, geometry, opticalModel) {
 
@@ -17,8 +11,8 @@ export default class RayTracer {
         const centerY = model.center.y;
 
         const spacing = 20;
-
         const startX = 40;
+        const insideLength = 180;
 
         for (let i = -3; i <= 3; i++) {
 
@@ -29,28 +23,55 @@ export default class RayTracer {
                 { x: 1, y: 0 }
             );
 
-            const hit = this.cornea.intersect(ray, geometry);
+            let currentDirection = ray.direction;
+            let currentPoint = { x: startX, y };
 
-            if (hit) {
+            for (const surface of opticalModel.surfaces) {
 
-                ray.addIntersection(
-                    this.cornea,
+                const hit = surface.intersect(
+                    {
+                        origin: currentPoint,
+                        direction: currentDirection
+                    },
+                    geometry
+                );
+
+                if (!hit) {
+                    continue;
+                }
+
+                ray.addIntersection(surface, hit);
+
+                ray.addSegment(
+                    currentPoint,
                     hit
                 );
 
-                ray.addSegment(
-                    { x: startX, y },
-                    hit
+                const normal = surface.normal(hit, geometry);
+
+                const newDirection = Snell.refract(
+                    currentDirection,
+                    normal,
+                    surface.nBefore,
+                    surface.nAfter
                 );
 
-            } else {
+                if (!newDirection) {
+                    break;
+                }
 
-                ray.addSegment(
-                    { x: startX, y },
-                    { x: 220, y }
-                );
+                currentPoint = hit;
+                currentDirection = newDirection;
 
             }
+
+            ray.addSegment(
+                currentPoint,
+                {
+                    x: currentPoint.x + currentDirection.x * insideLength,
+                    y: currentPoint.y + currentDirection.y * insideLength
+                }
+            );
 
             scene.addRay(ray);
 

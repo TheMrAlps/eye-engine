@@ -1,26 +1,20 @@
+import CorneaSurface from "./CorneaSurface.js";
+
 export default class OpticalModel {
 
     constructor() {
 
-        this.air = {
-            n: 1.0003
-        };
+        this.reset();
 
-        this.cornea = {
-            n: 1.376
-        };
+    }
 
-        this.aqueous = {
-            n: 1.336
-        };
+    reset() {
 
-        this.lens = {
-            n: 1.406
-        };
+        this.surfaces = [
 
-        this.vitreous = {
-            n: 1.336
-        };
+            new CorneaSurface()
+
+        ];
 
     }
 

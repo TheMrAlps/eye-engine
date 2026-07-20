@@ -8,6 +8,9 @@ export default class Ray {
         // Every straight portion of the ray
         this.segments = [];
 
+        // Ordered list of optical intersections
+        this.intersections = [];
+
     }
 
     addSegment(start, end) {
@@ -15,6 +18,21 @@ export default class Ray {
         this.segments.push({
             start: { ...start },
             end: { ...end }
+        });
+
+    }
+
+    addIntersection(surface, point) {
+
+        this.intersections.push({
+
+            surface,
+
+            point: {
+                x: point.x,
+                y: point.y
+            }
+
         });
 
     }

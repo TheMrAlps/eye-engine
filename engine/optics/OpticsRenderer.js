@@ -5,20 +5,29 @@ export default class OpticsRenderer {
     constructor(svg) {
 
         this.svg = svg;
+
         this.lines = [];
+        this.points = [];
 
     }
 
     update(scene) {
 
-        // Remove previous rays
+        // Remove previous frame
+
         for (const line of this.lines) {
             line.remove();
         }
 
-        this.lines.length = 0;
+        for (const point of this.points) {
+            point.remove();
+        }
 
-        // Draw current rays
+        this.lines.length = 0;
+        this.points.length = 0;
+
+        // Draw rays
+
         for (const ray of scene.rays) {
 
             for (const segment of ray.segments) {
@@ -36,7 +45,29 @@ export default class OpticsRenderer {
                 line.setAttribute("stroke-linecap", "round");
 
                 this.svg.appendChild(line);
+
                 this.lines.push(line);
+
+            }
+
+            // Draw intersection points
+
+            for (const hit of ray.intersections) {
+
+                const circle = document.createElementNS(SVG_NS, "circle");
+
+                circle.setAttribute("cx", hit.point.x);
+                circle.setAttribute("cy", hit.point.y);
+
+                circle.setAttribute("r", "8");
+
+                circle.setAttribute("fill", "lime");
+circle.setAttribute("stroke", "black");
+circle.setAttribute("stroke-width", "2");
+
+                this.svg.appendChild(circle);
+
+                this.points.push(circle);
 
             }
 

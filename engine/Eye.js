@@ -1,9 +1,20 @@
+/* ==========================================================
+   Eye Engine
+
+   Eye.js
+
+   Main public API.
+
+========================================================== */
+
 import EyeModel from "./EyeModel.js";
 import Anatomy from "./anatomy/Anatomy.js";
 
 export default class Eye {
 
-    constructor(svg){
+    constructor(svg) {
+
+        this.svg = svg;
 
         this.model = new EyeModel();
 
@@ -11,9 +22,17 @@ export default class Eye {
 
     }
 
-    draw(){
+    draw() {
 
         this.anatomy.update(this.model);
+
+    }
+
+    reset() {
+
+        this.model.reset();
+
+        this.draw();
 
     }
 

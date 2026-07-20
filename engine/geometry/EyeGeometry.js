@@ -23,11 +23,14 @@ export default class EyeGeometry {
 
         this.opticalAxis = null;
 
+        this.sclera = {};
         this.cornea = {};
-
+        this.iris = {};
+        this.pupil = {};
         this.lens = {};
-
         this.retina = {};
+        this.vitreous = {};
+        this.opticNerve = {};
 
     }
 
@@ -50,6 +53,25 @@ export default class EyeGeometry {
         };
 
 
+
+        /*
+        --------------------------------------------
+        Sclera
+        --------------------------------------------
+        */
+
+        this.sclera = {
+
+            cx: model.sclera.x,
+            cy: model.sclera.y,
+
+            rx: model.sclera.radiusX,
+            ry: model.sclera.radiusY
+
+        };
+
+
+
         /*
         --------------------------------------------
         Cornea
@@ -58,19 +80,54 @@ export default class EyeGeometry {
 
         this.cornea = {
 
-            center: {
+            cx:
+                model.sclera.x -
+                model.sclera.radiusX -
+                (model.cornea.protrusion / 2),
 
-                x: model.sclera.x -
-                   model.sclera.radiusX -
-                   model.cornea.protrusion / 2,
+            cy: model.sclera.y,
 
-                y: model.sclera.y
-
-            },
-
-            radius: model.cornea.radius
+            rx: model.cornea.radius,
+            ry: model.cornea.radius
 
         };
+
+
+
+        /*
+        --------------------------------------------
+        Iris
+        --------------------------------------------
+        */
+
+        this.iris = {
+
+            cx: model.iris.x,
+            cy: model.center.y,
+
+            rx: model.iris.radiusX,
+            ry: model.iris.radiusY
+
+        };
+
+
+
+        /*
+        --------------------------------------------
+        Pupil
+        --------------------------------------------
+        */
+
+        this.pupil = {
+
+            cx: model.iris.x,
+            cy: model.center.y,
+
+            rx: model.pupil.radiusX,
+            ry: model.pupil.radiusY
+
+        };
+
 
 
         /*
@@ -81,19 +138,14 @@ export default class EyeGeometry {
 
         this.lens = {
 
-            center: {
+            cx: model.lens.x,
+            cy: model.center.y,
 
-                x: model.lens.x,
-
-                y: model.sclera.y
-
-            },
-
-            radiusX: model.lens.radiusX,
-
-            radiusY: model.lens.radiusY
+            rx: model.lens.radiusX,
+            ry: model.lens.radiusY
 
         };
+
 
 
         /*
@@ -105,14 +157,49 @@ export default class EyeGeometry {
         this.retina = {
 
             x:
-
                 model.sclera.x +
-
                 model.sclera.radiusX -
-
                 model.retina.inset,
 
-            y: model.sclera.y
+            y: model.center.y,
+
+            inset: model.retina.inset,
+            thickness: model.retina.thickness
+
+        };
+
+
+
+        /*
+        --------------------------------------------
+        Vitreous
+        --------------------------------------------
+        */
+
+        this.vitreous = {
+
+            inset: model.vitreous.inset
+
+        };
+
+
+
+        /*
+        --------------------------------------------
+        Optic Nerve
+        --------------------------------------------
+        */
+
+        this.opticNerve = {
+
+            x:
+                model.sclera.x +
+                model.sclera.radiusX,
+
+            y: model.center.y,
+
+            length: model.opticNerve.length,
+            width: model.opticNerve.width
 
         };
 

@@ -5,24 +5,25 @@ import OpticsRenderer from "./OpticsRenderer.js";
 
 export default class OpticalEngine {
 
-    constructor() {
+    constructor(svg) {
 
         this.model = new OpticalModel();
         this.scene = new OpticalScene();
 
         this.tracer = new RayTracer();
-        this.renderer = new OpticsRenderer();
+        this.renderer = new OpticsRenderer(svg);
 
     }
 
-    update(eyeModel, geometry) {
+    update(model, geometry) {
 
-        // Future:
-        // this.scene = this.tracer.trace(
-        //     eyeModel,
-        //     geometry,
-        //     this.model
-        // );
+        this.scene = this.tracer.trace(
+            model,
+            geometry,
+            this.model
+        );
+
+        this.renderer.update(this.scene);
 
     }
 

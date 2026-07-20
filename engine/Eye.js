@@ -16,7 +16,7 @@ export default class Eye {
         this.geometry = new EyeGeometry();
 
         // Optical engine
-        this.optics = new OpticalEngine();
+       this.optics = new OpticalEngine(svg);
 
         // Anatomy renderer
         this.anatomy = new AnatomyRenderer(svg);

@@ -18,28 +18,14 @@ export default class Cornea extends Drawable {
 
     }
 
-   update(model) {
+    update(model, geometry) {
 
-    this.element.setAttribute(
-        "cx",
-        model.sclera.x - model.sclera.radiusX - model.cornea.protrusion / 2
-    );
+        this.element.setAttribute("cx", geometry.cornea.cx);
+        this.element.setAttribute("cy", geometry.cornea.cy);
 
-    this.element.setAttribute(
-        "cy",
-        model.sclera.y
-    );
+        this.element.setAttribute("rx", geometry.cornea.rx);
+        this.element.setAttribute("ry", geometry.cornea.ry);
 
-    this.element.setAttribute(
-        "rx",
-        model.cornea.radius
-    );
-
-    this.element.setAttribute(
-        "ry",
-        model.cornea.radius
-    );
-
-}
+    }
 
 }

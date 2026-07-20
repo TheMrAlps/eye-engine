@@ -1,10 +1,3 @@
-/* ==========================================================
-   Eye Engine
-
-   Anatomy.js
-
-========================================================== */
-
 import Sclera from "./Sclera.js";
 import Cornea from "./Cornea.js";
 import Iris from "./Iris.js";
@@ -13,27 +6,21 @@ import Lens from "./Lens.js";
 
 export default class Anatomy {
 
-    constructor(svg) {
+    constructor(svg){
 
         this.parts = [
 
-            new Sclera(),
-            new Cornea(),
-            new Iris(),
-            new Pupil(),
-            new Lens()
+            new Sclera(svg),
+            new Cornea(svg),
+            new Iris(svg),
+            new Pupil(svg),
+            new Lens(svg)
 
         ];
 
-        this.parts.forEach(
-
-            part => part.appendTo(svg)
-
-        );
-
     }
 
-    update(model) {
+    update(model){
 
         this.parts.forEach(
 

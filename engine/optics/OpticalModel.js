@@ -1,4 +1,5 @@
 import CorneaSurface from "./CorneaSurface.js";
+import PosteriorCorneaSurface from "./PosteriorCorneaSurface.js";
 
 export default class OpticalModel {
 
@@ -12,7 +13,8 @@ export default class OpticalModel {
 
         this.surfaces = [
 
-            new CorneaSurface()
+            new CorneaSurface(),
+            new PosteriorCorneaSurface()
 
         ];
 

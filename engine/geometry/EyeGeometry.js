@@ -11,6 +11,8 @@ This class contains no rendering logic.
 ==========================================================
 */
 
+import OpticalGeometry from "./OpticalGeometry.js";
+
 export default class EyeGeometry {
 
     constructor() {
@@ -31,6 +33,8 @@ export default class EyeGeometry {
         this.retina = {};
         this.vitreous = {};
         this.opticNerve = {};
+
+        this.optical = null;
 
     }
 
@@ -202,6 +206,16 @@ export default class EyeGeometry {
             width: model.opticNerve.width
 
         };
+
+
+
+        /*
+        --------------------------------------------
+        Optical Geometry
+        --------------------------------------------
+        */
+
+        this.optical = new OpticalGeometry(this);
 
     }
 

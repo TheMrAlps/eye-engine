@@ -1,15 +1,15 @@
 import Surface from "./Surface.js";
 
-export default class CorneaSurface extends Surface {
+export default class PosteriorCorneaSurface extends Surface {
 
     constructor() {
 
         super({
 
-            name: "Anterior Cornea",
+            name: "Posterior Cornea",
 
-            nBefore: 1.000,
-            nAfter: 1.376
+            nBefore: 1.376,
+            nAfter: 1.336
 
         });
 
@@ -17,7 +17,7 @@ export default class CorneaSurface extends Surface {
 
     intersect(ray, geometry) {
 
-        const surface = geometry.optical.surfaces[0];
+        const surface = geometry.optical.surfaces[1];
 
         const cx = surface.center.x;
         const cy = surface.center.y;
@@ -28,9 +28,6 @@ export default class CorneaSurface extends Surface {
 
         const dx = ray.direction.x;
         const dy = ray.direction.y;
-
-        // Solve:
-        // (ox + dx*t - cx)^2 + (oy + dy*t - cy)^2 = r^2
 
         const a = dx * dx + dy * dy;
 
@@ -78,7 +75,7 @@ export default class CorneaSurface extends Surface {
 
     normal(point, geometry) {
 
-        const surface = geometry.optical.surfaces[0];
+        const surface = geometry.optical.surfaces[1];
 
         return {
 

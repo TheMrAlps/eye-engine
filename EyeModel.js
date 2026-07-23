@@ -199,8 +199,8 @@ export default class EyeModel {
 
                 centerX: 12.25,
                 radiusX: 12.25,
-                radiusY: 11.5,
-                equatorialDiameter: 23.0
+                radiusY: 11.0,
+                equatorialDiameter: 22.0
 
             },
 
@@ -250,6 +250,13 @@ export default class EyeModel {
 
                 thickness: 0.3,
                 height: 10.0
+
+            },
+
+            opticNerve: {
+
+                length: 3.5,
+                radius: 0.65
 
             }
 

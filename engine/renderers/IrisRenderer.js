@@ -25,11 +25,13 @@ export default class Iris extends Drawable {
             [
                 `M ${iris.left} ${iris.upper}`,
                 `L ${iris.right} ${iris.upper}`,
+                `L ${iris.outerUpper.x} ${iris.outerUpper.y}`,
                 `L ${iris.right} ${iris.pupilUpper}`,
                 `L ${iris.left} ${iris.pupilUpper}`,
                 "Z",
                 `M ${iris.left} ${iris.pupilLower}`,
                 `L ${iris.right} ${iris.pupilLower}`,
+                `L ${iris.outerLower.x} ${iris.outerLower.y}`,
                 `L ${iris.right} ${iris.lower}`,
                 `L ${iris.left} ${iris.lower}`,
                 "Z"

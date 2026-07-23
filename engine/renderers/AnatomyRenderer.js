@@ -4,6 +4,7 @@ import Iris from "./IrisRenderer.js";
 import Pupil from "./PupilRenderer.js";
 import Lens from "./LensRenderer.js";
 import Retina from "./RetinaRenderer.js";
+import OpticNerve from "./OpticNerve.js";
 
 export default class Anatomy {
 
@@ -11,6 +12,7 @@ export default class Anatomy {
 
         this.parts = [
 
+            new OpticNerve(svg),
             new Sclera(svg),
             new Retina(svg),
             new Cornea(svg),

@@ -18,6 +18,7 @@ export default class EyeGeometry {
         this.pupil = {};
         this.lens = {};
         this.retina = {};
+        this.opticNerve = {};
         this.optical = null;
 
     }
@@ -161,16 +162,12 @@ export default class EyeGeometry {
             globe.centerX + globe.radiusX
         );
 
-        const outerTopY = this.projectY(-globe.radiusY);
-        const outerBottomY = this.projectY(globe.radiusY);
+        const globeRadiusX = this.mmToPixels(globe.radiusX);
+        const globeRadiusY = this.mmToPixels(globe.radiusY);
 
         this.sclera.path = [
             `M ${upperLimbus.x} ${upperLimbus.y}`,
-            `C ${this.projectX(6)} ${outerTopY}`,
-            `${this.projectX(20)} ${outerTopY}`,
-            `${outerBackX} ${this.projectY(0)}`,
-            `C ${this.projectX(20)} ${outerBottomY}`,
-            `${this.projectX(6)} ${outerBottomY}`,
+            `A ${globeRadiusX} ${globeRadiusY} 0 1 1`,
             `${lowerLimbus.x} ${lowerLimbus.y}`,
             `L ${upperLimbus.x} ${upperLimbus.y}`,
             "Z"
@@ -178,11 +175,7 @@ export default class EyeGeometry {
 
         this.sclera.outline = [
             `M ${upperLimbus.x} ${upperLimbus.y}`,
-            `C ${this.projectX(6)} ${outerTopY}`,
-            `${this.projectX(20)} ${outerTopY}`,
-            `${outerBackX} ${this.projectY(0)}`,
-            `C ${this.projectX(20)} ${outerBottomY}`,
-            `${this.projectX(6)} ${outerBottomY}`,
+            `A ${globeRadiusX} ${globeRadiusY} 0 1 1`,
             `${lowerLimbus.x} ${lowerLimbus.y}`
         ].join(" ");
 
@@ -202,7 +195,10 @@ export default class EyeGeometry {
             lower: this.projectY(anatomy.iris.radius),
 
             pupilUpper: this.projectY(-anatomy.pupil.radius),
-            pupilLower: this.projectY(anatomy.pupil.radius)
+            pupilLower: this.projectY(anatomy.pupil.radius),
+
+            outerUpper: { ...this.cornea.posterior.upper },
+            outerLower: { ...this.cornea.posterior.lower }
 
         };
 
@@ -336,6 +332,28 @@ export default class EyeGeometry {
             ),
 
             thickness: this.mmToPixels(anatomy.retina.thickness)
+
+        };
+
+        const opticNerve = anatomy.opticNerve;
+        const nerveStartX = outerBackX - this.mmToPixels(0.2);
+        const nerveEndX = outerBackX + this.mmToPixels(
+            opticNerve.length
+        );
+        const nerveRadius = this.mmToPixels(opticNerve.radius);
+
+        this.opticNerve = {
+
+            path: [
+                `M ${nerveStartX} ${this.projectY(-opticNerve.radius)}`,
+                `C ${nerveEndX - nerveRadius} ${this.projectY(-opticNerve.radius)}`,
+                `${nerveEndX} ${this.projectY(-opticNerve.radius / 2)}`,
+                `${nerveEndX} ${this.projectY(0)}`,
+                `C ${nerveEndX} ${this.projectY(opticNerve.radius / 2)}`,
+                `${nerveEndX - nerveRadius} ${this.projectY(opticNerve.radius)}`,
+                `${nerveStartX} ${this.projectY(opticNerve.radius)}`,
+                "Z"
+            ].join(" ")
 
         };
 

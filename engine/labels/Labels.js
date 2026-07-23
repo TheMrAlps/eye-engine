@@ -52,6 +52,14 @@ export default class Labels {
                 text: "Retina",
                 x: geometry.retina.apex.x,
                 y: geometry.projectY(-6.8)
+            },
+            {
+                text: "Optic nerve",
+                x: geometry.projectX(
+                    model.anatomy.axialLength +
+                    model.anatomy.opticNerve.length / 2
+                ),
+                y: geometry.projectY(3.5)
             }
         ];
 

@@ -3,6 +3,7 @@ import EyeGeometry from "./geometry/EyeGeometry.js";
 import AnatomyRenderer from "./renderers/AnatomyRenderer.js";
 import OpticalEngine from "./optics/OpticalEngine.js";
 import Labels from "./labels/Labels.js";
+import AxialLength from "./measurements/AxialLength.js";
 
 export default class Eye {
 
@@ -22,6 +23,7 @@ export default class Eye {
         // Anatomy renderer
         this.anatomy = new AnatomyRenderer(svg);
         this.labels = new Labels(svg);
+        this.axialLengthMeasurement = new AxialLength(svg);
 
     }
 
@@ -43,6 +45,11 @@ export default class Eye {
         );
 
         this.labels.update(
+            this.model,
+            this.geometry
+        );
+
+        this.axialLengthMeasurement.update(
             this.model,
             this.geometry
         );

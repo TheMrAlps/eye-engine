@@ -10,9 +10,9 @@ export default class OpticNerve extends Drawable {
 
         this.element = document.createElementNS(SVG_NS, "path");
 
-        this.element.setAttribute("fill", "#d9a39c");
-        this.element.setAttribute("stroke", "#9a665f");
-        this.element.setAttribute("stroke-width", "2");
+        this.element.setAttribute("fill", "none");
+        this.element.setAttribute("stroke", "#d9a39c");
+        this.element.setAttribute("stroke-linecap", "round");
 
         svg.appendChild(this.element);
 
@@ -20,7 +20,15 @@ export default class OpticNerve extends Drawable {
 
     update(model, geometry) {
 
-        this.element.setAttribute("d", geometry.opticNerve.path);
+        const nerve = geometry.opticNerve;
+
+        this.element.setAttribute(
+            "d",
+            `M ${nerve.start.x} ${nerve.start.y} ` +
+            `L ${nerve.end.x} ${nerve.end.y}`
+        );
+
+        this.element.setAttribute("stroke-width", nerve.width);
 
     }
 

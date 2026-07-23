@@ -18,6 +18,7 @@ export default class EyeGeometry {
         this.pupil = {};
         this.lens = {};
         this.retina = {};
+        this.macula = {};
         this.opticNerve = {};
         this.optical = null;
 
@@ -335,25 +336,31 @@ export default class EyeGeometry {
 
         };
 
+        // In this axial section, the fovea/macula is centred on the
+        // optical axis at the posterior retinal apex.
+        this.macula = {
+            x: this.retina.apex.x,
+            y: this.retina.apex.y,
+            radius: Math.max(2, this.mmToPixels(0.22))
+        };
+
         const opticNerve = anatomy.opticNerve;
-        const nerveStartX = outerBackX - this.mmToPixels(0.2);
-        const nerveEndX = outerBackX + this.mmToPixels(
-            opticNerve.length
-        );
-        const nerveRadius = this.mmToPixels(opticNerve.radius);
+        const nerveStart = {
+            x: outerBackX - this.mmToPixels(0.15),
+            y: this.projectY(0.8)
+        };
+        const nerveEnd = {
+            x: outerBackX + this.mmToPixels(opticNerve.length),
+            y: this.projectY(
+                0.8 + opticNerve.downwardAngle
+            )
+        };
 
         this.opticNerve = {
 
-            path: [
-                `M ${nerveStartX} ${this.projectY(-opticNerve.radius)}`,
-                `C ${nerveEndX - nerveRadius} ${this.projectY(-opticNerve.radius)}`,
-                `${nerveEndX} ${this.projectY(-opticNerve.radius / 2)}`,
-                `${nerveEndX} ${this.projectY(0)}`,
-                `C ${nerveEndX} ${this.projectY(opticNerve.radius / 2)}`,
-                `${nerveEndX - nerveRadius} ${this.projectY(opticNerve.radius)}`,
-                `${nerveStartX} ${this.projectY(opticNerve.radius)}`,
-                "Z"
-            ].join(" ")
+            start: nerveStart,
+            end: nerveEnd,
+            width: this.mmToPixels(opticNerve.radius * 2)
 
         };
 

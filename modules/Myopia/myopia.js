@@ -11,6 +11,7 @@ const snapFocus = document.getElementById("snap-focus");
 const eye = new Eye(svg);
 
 eye.model.annotations.showLabels = true;
+eye.model.annotations.showAxialLength = true;
 
 eye.update();
 

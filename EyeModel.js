@@ -181,7 +181,8 @@ export default class EyeModel {
 
         this.annotations = {
 
-            showLabels: false
+            showLabels: false,
+            showAxialLength: false
 
         };
 
@@ -199,8 +200,9 @@ export default class EyeModel {
 
                 centerX: 12.25,
                 radiusX: 12.25,
-                radiusY: 11.0,
-                equatorialDiameter: 22.0
+                // The sagittal eye is slightly wider than it is tall.
+                radiusY: 10.0,
+                equatorialDiameter: 20.0
 
             },
 
@@ -256,7 +258,8 @@ export default class EyeModel {
             opticNerve: {
 
                 length: 3.5,
-                radius: 0.65
+                radius: 0.65,
+                downwardAngle: 0.9
 
             }
 

@@ -50,8 +50,14 @@ export default class Labels {
             },
             {
                 text: "Retina",
-                x: geometry.retina.apex.x,
-                y: geometry.projectY(-6.8)
+                x: geometry.retina.upper.x - geometry.mmToPixels(1.4),
+                y: geometry.retina.upper.y - geometry.mmToPixels(1.5)
+            },
+            {
+                text: "Macula",
+                x: geometry.macula.x + geometry.mmToPixels(0.45),
+                y: geometry.macula.y - geometry.mmToPixels(0.65),
+                anchor: "start"
             },
             {
                 text: "Optic nerve",
@@ -69,7 +75,7 @@ export default class Labels {
 
             text.setAttribute("x", label.x);
             text.setAttribute("y", label.y);
-            text.setAttribute("text-anchor", "middle");
+            text.setAttribute("text-anchor", label.anchor || "middle");
             text.textContent = label.text;
 
             this.group.appendChild(text);

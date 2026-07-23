@@ -1,0 +1,124 @@
+:root {
+    color: #18212c;
+    background: #f4f6f8;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    margin: 0;
+}
+
+.myopia-module {
+    box-sizing: border-box;
+    display: grid;
+    gap: 24px;
+    grid-template-columns: minmax(240px, 320px) minmax(0, 1fr);
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 32px;
+}
+
+.myopia-module__controls,
+.myopia-module__patient-view {
+    border: 1px solid #d5dce3;
+    border-radius: 12px;
+    background: #fff;
+    padding: 24px;
+}
+
+.myopia-module__controls {
+    grid-row: span 2;
+}
+
+.myopia-module__diagram {
+    min-width: 0;
+}
+
+.myopia-module__diagram svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid #d5dce3;
+    background: #fff;
+}
+
+.myopia-module__eyebrow {
+    margin: 0 0 6px;
+    color: #4f86c6;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.myopia-module h1,
+.myopia-module h2 {
+    margin: 0 0 12px;
+}
+
+.myopia-module__range-row {
+    display: grid;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.myopia-module input[type="range"] {
+    width: 100%;
+}
+
+.myopia-module output {
+    color: #1c5a97;
+    font-weight: 700;
+}
+
+.myopia-module button {
+    margin-top: 16px;
+    border: 0;
+    border-radius: 6px;
+    background: #1c5a97;
+    color: #fff;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 700;
+    padding: 10px 14px;
+}
+
+.myopia-module__context {
+    color: #52606d;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.myopia-module__status {
+    margin-bottom: 0;
+    font-weight: 700;
+}
+
+.myopia-module__view-window {
+    display: grid;
+    min-height: 180px;
+    place-items: center;
+    overflow: hidden;
+    border-radius: 8px;
+    background: #f4f6f8;
+}
+
+.myopia-module__view-window span {
+    color: #111;
+    max-width: 80%;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.3;
+    text-align: center;
+}
+
+@media (max-width: 800px) {
+    .myopia-module {
+        grid-template-columns: 1fr;
+        padding: 16px;
+    }
+
+    .myopia-module__controls {
+        grid-row: auto;
+    }
+}

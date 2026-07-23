@@ -14,6 +14,7 @@ export default class OpticalScene {
 
         this.focusPoint = null;
         this.focusOffsetMillimeters = null;
+        this.retinalBlurMillimeters = null;
 
     }
 

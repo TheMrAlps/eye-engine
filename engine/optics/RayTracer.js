@@ -88,6 +88,11 @@ export default class RayTracer {
 
         }
 
+        scene.retinalBlurMillimeters = this.measureRetinalBlur(
+            scene.rays,
+            geometry
+        );
+
         return scene;
 
     }
@@ -142,6 +147,28 @@ export default class RayTracer {
             y: ((a11 * b2) - (a12 * b1)) / determinant
 
         };
+
+    }
+
+    measureRetinalBlur(rays, geometry) {
+
+        const retinalHeights = rays.map(ray => {
+
+            const segment = ray.segments[ray.segments.length - 1];
+
+            return segment.end.y;
+
+        });
+
+        if (retinalHeights.length === 0) {
+            return null;
+        }
+
+        const diameterPixels =
+            Math.max(...retinalHeights) -
+            Math.min(...retinalHeights);
+
+        return diameterPixels / geometry.projection.pixelsPerMillimeter;
 
     }
 

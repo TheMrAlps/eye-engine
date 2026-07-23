@@ -2,6 +2,7 @@ import EyeModel from "../EyeModel.js";
 import EyeGeometry from "./geometry/EyeGeometry.js";
 import AnatomyRenderer from "./renderers/AnatomyRenderer.js";
 import OpticalEngine from "./optics/OpticalEngine.js";
+import Labels from "./labels/Labels.js";
 
 export default class Eye {
 
@@ -20,6 +21,7 @@ export default class Eye {
 
         // Anatomy renderer
         this.anatomy = new AnatomyRenderer(svg);
+        this.labels = new Labels(svg);
 
     }
 
@@ -36,6 +38,11 @@ export default class Eye {
 
         // 3. Render anatomy
         this.anatomy.update(
+            this.model,
+            this.geometry
+        );
+
+        this.labels.update(
             this.model,
             this.geometry
         );

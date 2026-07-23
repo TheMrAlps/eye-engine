@@ -179,6 +179,12 @@ export default class EyeModel {
 
         };
 
+        this.annotations = {
+
+            showLabels: false
+
+        };
+
         /*
         --------------------------------------------
         Physical Anatomy (mm)
@@ -248,6 +254,35 @@ export default class EyeModel {
             }
 
         };
+
+    }
+
+    setAxialLength(axialLength) {
+
+        const anatomy = this.anatomy;
+
+        const fixedAnteriorLength =
+            anatomy.cornea.thickness +
+            anatomy.anteriorChamberDepth +
+            anatomy.lens.thickness;
+
+        if (!Number.isFinite(axialLength) ||
+            axialLength <= fixedAnteriorLength) {
+
+            throw new RangeError(
+                "Axial length must extend beyond the anterior segment."
+            );
+
+        }
+
+        anatomy.axialLength = axialLength;
+        anatomy.vitreousLength = axialLength - fixedAnteriorLength;
+
+        const outerGlobeLength =
+            axialLength + anatomy.sclera.thickness;
+
+        anatomy.globe.centerX = outerGlobeLength / 2;
+        anatomy.globe.radiusX = outerGlobeLength / 2;
 
     }
 

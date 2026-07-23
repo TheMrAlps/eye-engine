@@ -1,1 +1,69 @@
+<!doctype html>
 
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Eye Engine — Myopia</title>
+    <link rel="stylesheet" href="myopia.css">
+
+</head>
+
+<body>
+
+    <main class="myopia-module">
+
+        <section class="myopia-module__controls" aria-labelledby="myopia-title">
+
+            <p class="myopia-module__eyebrow">Eye Engine</p>
+            <h1 id="myopia-title">Myopia simulation</h1>
+            <p>Increase axial length to move the retina behind the focal plane.</p>
+
+            <label for="axial-length">Axial length</label>
+            <div class="myopia-module__range-row">
+                <input
+                    id="axial-length"
+                    type="range"
+                    min="22"
+                    max="27"
+                    step="0.01"
+                    value="23.5">
+                <output id="axial-length-value" for="axial-length">23.50 mm</output>
+            </div>
+
+            <button id="snap-focus" type="button">Snap to retinal focus</button>
+
+            <p id="focus-status" class="myopia-module__status" aria-live="polite"></p>
+
+            <p class="myopia-module__context">
+                Myopia control aims to slow excessive axial eye growth during
+                childhood. This interactive model is educational and does not
+                replace individualized clinical care.
+            </p>
+
+        </section>
+
+        <section class="myopia-module__diagram" aria-label="Optical eye cross-section">
+            <svg id="eye" viewBox="0 0 900 500"></svg>
+        </section>
+
+        <section class="myopia-module__patient-view" aria-labelledby="patient-view-title">
+
+            <p class="myopia-module__eyebrow">Educational patient view</p>
+            <h2 id="patient-view-title">A distant optotype</h2>
+            <div class="myopia-module__view-window">
+                <span id="optotype">This is what a patient sees.</span>
+            </div>
+            <p id="blur-value"></p>
+
+        </section>
+
+    </main>
+
+    <script type="module" src="myopia.js"></script>
+
+</body>
+
+</html>

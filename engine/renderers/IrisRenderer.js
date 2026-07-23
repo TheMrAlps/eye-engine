@@ -8,7 +8,7 @@ export default class Iris extends Drawable {
 
         super(svg);
 
-        this.element = document.createElementNS(SVG_NS, "ellipse");
+        this.element = document.createElementNS(SVG_NS, "path");
 
         this.element.setAttribute("fill", "#4f86c6");
 
@@ -18,11 +18,23 @@ export default class Iris extends Drawable {
 
     update(model, geometry) {
 
-        this.element.setAttribute("cx", geometry.iris.cx);
-        this.element.setAttribute("cy", geometry.iris.cy);
+        const iris = geometry.iris;
 
-        this.element.setAttribute("rx", geometry.iris.rx);
-        this.element.setAttribute("ry", geometry.iris.ry);
+        this.element.setAttribute(
+            "d",
+            [
+                `M ${iris.left} ${iris.upper}`,
+                `L ${iris.right} ${iris.upper}`,
+                `L ${iris.right} ${iris.pupilUpper}`,
+                `L ${iris.left} ${iris.pupilUpper}`,
+                "Z",
+                `M ${iris.left} ${iris.pupilLower}`,
+                `L ${iris.right} ${iris.pupilLower}`,
+                `L ${iris.right} ${iris.lower}`,
+                `L ${iris.left} ${iris.lower}`,
+                "Z"
+            ].join(" ")
+        );
 
     }
 

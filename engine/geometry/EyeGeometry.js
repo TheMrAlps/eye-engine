@@ -188,10 +188,21 @@ export default class EyeGeometry {
 
         this.iris = {
 
-            cx: this.projectX(anatomy.iris.plane),
-            cy: this.projectY(0),
-            rx: this.mmToPixels(anatomy.iris.thickness / 2),
-            ry: this.mmToPixels(anatomy.iris.radius)
+            left: this.projectX(
+                anatomy.iris.plane -
+                (anatomy.iris.thickness / 2)
+            ),
+
+            right: this.projectX(
+                anatomy.iris.plane +
+                (anatomy.iris.thickness / 2)
+            ),
+
+            upper: this.projectY(-anatomy.iris.radius),
+            lower: this.projectY(anatomy.iris.radius),
+
+            pupilUpper: this.projectY(-anatomy.pupil.radius),
+            pupilLower: this.projectY(anatomy.pupil.radius)
 
         };
 
@@ -204,16 +215,87 @@ export default class EyeGeometry {
 
         };
 
+        const lens = anatomy.lens;
+        const lensAnteriorVertex =
+            cornea.thickness + anatomy.anteriorChamberDepth;
+        const lensPosteriorVertex =
+            lensAnteriorVertex + lens.thickness;
+        const lensSemiDiameter = lens.equatorialRadius;
+        const lensAnteriorEdge =
+            lensAnteriorVertex + lens.anteriorRadius -
+            Math.sqrt(
+                (lens.anteriorRadius * lens.anteriorRadius) -
+                (lensSemiDiameter * lensSemiDiameter)
+            );
+        const lensPosteriorEdge =
+            lensPosteriorVertex - lens.posteriorRadius +
+            Math.sqrt(
+                (lens.posteriorRadius * lens.posteriorRadius) -
+                (lensSemiDiameter * lensSemiDiameter)
+            );
+
         this.lens = {
 
-            cx: this.projectX(
-                cornea.thickness +
-                anatomy.anteriorChamberDepth +
-                (anatomy.lens.thickness / 2)
-            ),
-            cy: this.projectY(0),
-            rx: this.mmToPixels(anatomy.lens.thickness / 2),
-            ry: this.mmToPixels(anatomy.lens.equatorialRadius)
+            outline: {
+
+                cx: this.projectX(
+                    (lensAnteriorVertex + lensPosteriorVertex) / 2
+                ),
+                cy: this.projectY(0),
+                rx: this.mmToPixels(lens.thickness / 2),
+                ry: this.mmToPixels(lensSemiDiameter)
+
+            },
+
+            anterior: {
+
+                upper: {
+                    x: this.projectX(lensAnteriorEdge),
+                    y: this.projectY(-lensSemiDiameter)
+                },
+                lower: {
+                    x: this.projectX(lensAnteriorEdge),
+                    y: this.projectY(lensSemiDiameter)
+                },
+                controlX: this.projectX(
+                    (2 * lensAnteriorVertex) - lensAnteriorEdge
+                )
+
+            },
+
+            posterior: {
+
+                upper: {
+                    x: this.projectX(lensPosteriorEdge),
+                    y: this.projectY(-lensSemiDiameter)
+                },
+                lower: {
+                    x: this.projectX(lensPosteriorEdge),
+                    y: this.projectY(lensSemiDiameter)
+                },
+                controlX: this.projectX(
+                    (2 * lensPosteriorVertex) - lensPosteriorEdge
+                )
+
+            },
+
+            centerY: this.projectY(0),
+
+            equator: {
+
+                controlX: this.projectX(
+                    (lensAnteriorEdge + lensPosteriorEdge) / 2
+                ),
+
+                upperControlY: this.projectY(
+                    -(lensSemiDiameter + 0.3)
+                ),
+
+                lowerControlY: this.projectY(
+                    lensSemiDiameter + 0.3
+                )
+
+            }
 
         };
 

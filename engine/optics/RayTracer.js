@@ -37,7 +37,7 @@ export default class RayTracer {
                 );
 
                 if (!hit) {
-                    continue;
+                    break;
                 }
 
                 ray.addIntersection(surface, hit);
@@ -78,7 +78,70 @@ export default class RayTracer {
 
         }
 
+        scene.focusPoint = this.findFocus(scene.rays);
+
+        if (scene.focusPoint) {
+
+            scene.focusOffsetMillimeters =
+                (scene.focusPoint.x - geometry.opticalAxis.screen.x2) /
+                geometry.projection.pixelsPerMillimeter;
+
+        }
+
         return scene;
+
+    }
+
+    findFocus(rays) {
+
+        let a11 = 0;
+        let a12 = 0;
+        let a22 = 0;
+        let b1 = 0;
+        let b2 = 0;
+
+        for (const ray of rays) {
+
+            const segment = ray.segments[ray.segments.length - 1];
+
+            if (!segment) {
+                continue;
+            }
+
+            const dx = segment.end.x - segment.start.x;
+            const dy = segment.end.y - segment.start.y;
+            const length = Math.hypot(dx, dy);
+
+            if (length === 0) {
+                continue;
+            }
+
+            const nx = -dy / length;
+            const ny = dx / length;
+            const projection =
+                (nx * segment.start.x) +
+                (ny * segment.start.y);
+
+            a11 += nx * nx;
+            a12 += nx * ny;
+            a22 += ny * ny;
+            b1 += nx * projection;
+            b2 += ny * projection;
+
+        }
+
+        const determinant = (a11 * a22) - (a12 * a12);
+
+        if (Math.abs(determinant) < 1e-9) {
+            return null;
+        }
+
+        return {
+
+            x: ((a22 * b1) - (a12 * b2)) / determinant,
+            y: ((a11 * b2) - (a12 * b1)) / determinant
+
+        };
 
     }
 

@@ -9,6 +9,7 @@ export default class OpticsRenderer {
         this.lines = [];
         this.points = [];
         this.showIntersections = false;
+        this.showFocus = false;
 
     }
 
@@ -75,6 +76,23 @@ circle.setAttribute("stroke-width", "2");
                 this.points.push(circle);
 
             }
+
+        }
+
+        if (this.showFocus && scene.focusPoint) {
+
+            const circle = document.createElementNS(SVG_NS, "circle");
+
+            circle.setAttribute("cx", scene.focusPoint.x);
+            circle.setAttribute("cy", scene.focusPoint.y);
+            circle.setAttribute("r", "6");
+            circle.setAttribute("fill", "#b44cff");
+            circle.setAttribute("stroke", "#fff");
+            circle.setAttribute("stroke-width", "2");
+
+            this.svg.appendChild(circle);
+
+            this.points.push(circle);
 
         }
 

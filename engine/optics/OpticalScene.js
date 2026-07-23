@@ -13,6 +13,7 @@ export default class OpticalScene {
         this.rays = [];
 
         this.focusPoint = null;
+        this.focusOffsetMillimeters = null;
 
     }
 

@@ -17,6 +17,12 @@ export default class OpticalEngine {
 
     update(model, geometry) {
 
+        this.renderer.showIntersections =
+            model.optics.debug.showIntersections;
+
+        this.renderer.showFocus =
+            model.optics.debug.showFocus;
+
         this.scene = this.tracer.trace(
             model,
             geometry,

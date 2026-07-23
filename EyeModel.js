@@ -168,7 +168,14 @@ export default class EyeModel {
 
             focusX: 720,
 
-            blur: 0
+            blur: 0,
+
+            debug: {
+
+                showIntersections: false,
+                showFocus: false
+
+            }
 
         };
 
@@ -211,8 +218,8 @@ export default class EyeModel {
             lens: {
 
                 thickness: 4.0,
-                anteriorRadius: 10.0,
-                posteriorRadius: 6.0,
+                anteriorRadius: 11.85,
+                posteriorRadius: 7.1,
                 equatorialRadius: 4.5
 
             },

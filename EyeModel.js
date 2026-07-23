@@ -184,10 +184,16 @@ export default class EyeModel {
 
             globe: {
 
-                centerX: 12.0,
-                radiusX: 11.5,
+                centerX: 12.25,
+                radiusX: 12.25,
                 radiusY: 11.5,
                 equatorialDiameter: 23.0
+
+            },
+
+            sclera: {
+
+                thickness: 1.0
 
             },
 
@@ -229,7 +235,8 @@ export default class EyeModel {
 
             retina: {
 
-                thickness: 0.3
+                thickness: 0.3,
+                height: 10.0
 
             }
 

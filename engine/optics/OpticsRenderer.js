@@ -8,6 +8,7 @@ export default class OpticsRenderer {
 
         this.lines = [];
         this.points = [];
+        this.showIntersections = false;
 
     }
 
@@ -51,6 +52,10 @@ export default class OpticsRenderer {
             }
 
             // Draw intersection points
+
+            if (!this.showIntersections) {
+                continue;
+            }
 
             for (const hit of ray.intersections) {
 

@@ -3,6 +3,7 @@ import Cornea from "./CorneaRenderer.js";
 import Iris from "./IrisRenderer.js";
 import Pupil from "./PupilRenderer.js";
 import Lens from "./LensRenderer.js";
+import Retina from "./RetinaRenderer.js";
 
 export default class Anatomy {
 
@@ -11,6 +12,7 @@ export default class Anatomy {
         this.parts = [
 
             new Sclera(svg),
+            new Retina(svg),
             new Cornea(svg),
             new Iris(svg),
             new Pupil(svg),

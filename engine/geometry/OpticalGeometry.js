@@ -38,7 +38,7 @@ export default class OpticalGeometry {
             center: {
 
                 x: geometry.projectX(
-                    cornea.thickness - cornea.posteriorRadius
+                    cornea.thickness + cornea.posteriorRadius
                 ),
                 y: geometry.projectY(0)
 

@@ -1,14 +1,16 @@
 export default class OpticalGeometry {
 
-    constructor(geometry) {
+    constructor(geometry, model) {
 
         this.surfaces = [];
 
-        this.buildCornea(geometry);
+        this.buildCornea(geometry, model);
 
     }
 
-    buildCornea(geometry) {
+    buildCornea(geometry, model) {
+
+        const cornea = model.anatomy.cornea;
 
         const anterior = {
 
@@ -18,12 +20,12 @@ export default class OpticalGeometry {
 
             center: {
 
-                x: geometry.cornea.cx,
-                y: geometry.cornea.cy
+                x: geometry.projectX(cornea.anteriorRadius),
+                y: geometry.projectY(0)
 
             },
 
-            radius: geometry.cornea.rx
+            radius: geometry.mmToPixels(cornea.anteriorRadius)
 
         };
 
@@ -35,12 +37,14 @@ export default class OpticalGeometry {
 
             center: {
 
-                x: geometry.cornea.cx + 6,
-                y: geometry.cornea.cy
+                x: geometry.projectX(
+                    cornea.thickness - cornea.posteriorRadius
+                ),
+                y: geometry.projectY(0)
 
             },
 
-            radius: geometry.cornea.rx - 4
+            radius: geometry.mmToPixels(cornea.posteriorRadius)
 
         };
 

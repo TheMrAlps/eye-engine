@@ -16,13 +16,13 @@ export default class Pupil extends Drawable {
 
     }
 
-    update(model) {
+    update(model, geometry) {
 
-        this.element.setAttribute("cx", model.iris.x);
-        this.element.setAttribute("cy", model.center.y);
+        this.element.setAttribute("cx", geometry.pupil.cx);
+        this.element.setAttribute("cy", geometry.pupil.cy);
 
-        this.element.setAttribute("rx", model.pupil.radiusX);
-        this.element.setAttribute("ry", model.pupil.radiusY);
+        this.element.setAttribute("rx", geometry.pupil.rx);
+        this.element.setAttribute("ry", geometry.pupil.ry);
 
     }
 

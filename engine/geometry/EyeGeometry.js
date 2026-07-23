@@ -1,16 +1,3 @@
-/*
-==========================================================
-
-Eye Engine
-
-EyeGeometry.js
-
-Computes derived geometry from the anatomical model.
-This class contains no rendering logic.
-
-==========================================================
-*/
-
 import OpticalGeometry from "./OpticalGeometry.js";
 
 export default class EyeGeometry {
@@ -23,199 +10,140 @@ export default class EyeGeometry {
 
     reset() {
 
+        this.projection = null;
         this.opticalAxis = null;
-
         this.sclera = {};
         this.cornea = {};
         this.iris = {};
         this.pupil = {};
         this.lens = {};
         this.retina = {};
-        this.vitreous = {};
-        this.opticNerve = {};
-
         this.optical = null;
+
+    }
+
+    mmToPixels(mm) {
+
+        return mm * this.projection.pixelsPerMillimeter;
+
+    }
+
+    projectX(x) {
+
+        return this.projection.originX + this.mmToPixels(x);
+
+    }
+
+    projectY(y) {
+
+        return this.projection.originY + this.mmToPixels(y);
 
     }
 
     update(model) {
 
-        /*
-        --------------------------------------------
-        Optical Axis
-        --------------------------------------------
-        */
+        const anatomy = model.anatomy;
+        const globe = anatomy.globe;
+
+        const drawableWidth = model.viewport.width -
+            (model.viewport.padding * 2);
+
+        const drawableHeight = model.viewport.height -
+            (model.viewport.padding * 2);
+
+        const pixelsPerMillimeter = Math.min(
+            drawableWidth / anatomy.axialLength,
+            drawableHeight / globe.equatorialDiameter
+        );
+
+        this.projection = {
+
+            pixelsPerMillimeter,
+            originX: (
+                model.viewport.width -
+                (anatomy.axialLength * pixelsPerMillimeter)
+            ) / 2,
+            originY: model.viewport.height / 2
+
+        };
 
         this.opticalAxis = {
 
-            x1: 0,
-            y1: model.center.y,
+            physical: { x1: 0, x2: anatomy.axialLength, y: 0 },
 
-            x2: 1000,
-            y2: model.center.y
+            screen: {
+                x1: this.projectX(0),
+                x2: this.projectX(anatomy.axialLength),
+                y: this.projectY(0)
+            }
 
         };
-
-
-
-        /*
-        --------------------------------------------
-        Sclera
-        --------------------------------------------
-        */
 
         this.sclera = {
 
-            cx: model.sclera.x,
-            cy: model.sclera.y,
-
-            rx: model.sclera.radiusX,
-            ry: model.sclera.radiusY
+            cx: this.projectX(globe.centerX),
+            cy: this.projectY(0),
+            rx: this.mmToPixels(globe.radiusX),
+            ry: this.mmToPixels(globe.radiusY)
 
         };
 
-
-
-        /*
-        --------------------------------------------
-        Cornea
-        --------------------------------------------
-        */
+        const cornea = anatomy.cornea;
+        const cornealSemiDiameter = cornea.diameter / 2;
+        const cornealSagitta = cornea.anteriorRadius - Math.sqrt(
+            (cornea.anteriorRadius * cornea.anteriorRadius) -
+            (cornealSemiDiameter * cornealSemiDiameter)
+        );
 
         this.cornea = {
 
-            cx:
-                model.sclera.x -
-                model.sclera.radiusX -
-                (model.cornea.protrusion / 2),
-
-            cy: model.sclera.y,
-
-            rx: model.cornea.radius,
-            ry: model.cornea.radius
+            cx: this.projectX(cornealSagitta / 2),
+            cy: this.projectY(0),
+            rx: this.mmToPixels(cornealSagitta / 2),
+            ry: this.mmToPixels(cornealSemiDiameter)
 
         };
-
-
-
-        /*
-        --------------------------------------------
-        Iris
-        --------------------------------------------
-        */
 
         this.iris = {
 
-            cx: model.iris.x,
-            cy: model.center.y,
-
-            rx: model.iris.radiusX,
-            ry: model.iris.radiusY
+            cx: this.projectX(anatomy.iris.plane),
+            cy: this.projectY(0),
+            rx: this.mmToPixels(anatomy.iris.thickness / 2),
+            ry: this.mmToPixels(anatomy.iris.radius)
 
         };
-
-
-
-        /*
-        --------------------------------------------
-        Pupil
-        --------------------------------------------
-        */
 
         this.pupil = {
 
-            cx: model.iris.x,
-            cy: model.center.y,
-
-            rx: model.pupil.radiusX,
-            ry: model.pupil.radiusY
+            cx: this.projectX(anatomy.iris.plane),
+            cy: this.projectY(0),
+            rx: this.mmToPixels(anatomy.iris.thickness),
+            ry: this.mmToPixels(anatomy.pupil.radius)
 
         };
-
-
-
-        /*
-        --------------------------------------------
-        Lens
-        --------------------------------------------
-        */
 
         this.lens = {
 
-            cx: model.lens.x,
-            cy: model.center.y,
-
-            rx: model.lens.radiusX,
-            ry: model.lens.radiusY
+            cx: this.projectX(
+                cornea.thickness +
+                anatomy.anteriorChamberDepth +
+                (anatomy.lens.thickness / 2)
+            ),
+            cy: this.projectY(0),
+            rx: this.mmToPixels(anatomy.lens.thickness / 2),
+            ry: this.mmToPixels(anatomy.lens.equatorialRadius)
 
         };
-
-
-
-        /*
-        --------------------------------------------
-        Retina
-        --------------------------------------------
-        */
 
         this.retina = {
 
-            x:
-                model.sclera.x +
-                model.sclera.radiusX -
-                model.retina.inset,
-
-            y: model.center.y,
-
-            inset: model.retina.inset,
-            thickness: model.retina.thickness
+            x: this.projectX(anatomy.axialLength),
+            y: this.projectY(0),
+            thickness: this.mmToPixels(anatomy.retina.thickness)
 
         };
 
-
-
-        /*
-        --------------------------------------------
-        Vitreous
-        --------------------------------------------
-        */
-
-        this.vitreous = {
-
-            inset: model.vitreous.inset
-
-        };
-
-
-
-        /*
-        --------------------------------------------
-        Optic Nerve
-        --------------------------------------------
-        */
-
-        this.opticNerve = {
-
-            x:
-                model.sclera.x +
-                model.sclera.radiusX,
-
-            y: model.center.y,
-
-            length: model.opticNerve.length,
-            width: model.opticNerve.width
-
-        };
-
-
-
-        /*
-        --------------------------------------------
-        Optical Geometry
-        --------------------------------------------
-        */
-
-        this.optical = new OpticalGeometry(this);
+        this.optical = new OpticalGeometry(this, model);
 
     }
 

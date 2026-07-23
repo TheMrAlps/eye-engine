@@ -8,11 +8,11 @@ export default class RayTracer {
 
         const scene = new OpticalScene();
 
-        const centerY = model.center.y;
+        const centerY = geometry.opticalAxis.screen.y;
 
-        const spacing = 20;
-        const startX = 40;
-        const insideLength = 180;
+        const spacing = geometry.mmToPixels(1.5);
+        const startX = geometry.projectX(-4);
+        const endX = geometry.opticalAxis.screen.x2;
 
         for (let i = -3; i <= 3; i++) {
 
@@ -68,8 +68,9 @@ export default class RayTracer {
             ray.addSegment(
                 currentPoint,
                 {
-                    x: currentPoint.x + currentDirection.x * insideLength,
-                    y: currentPoint.y + currentDirection.y * insideLength
+                    x: endX,
+                    y: currentPoint.y + currentDirection.y *
+                        (endX - currentPoint.x) / currentDirection.x
                 }
             );
 

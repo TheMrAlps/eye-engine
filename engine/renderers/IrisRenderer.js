@@ -16,13 +16,13 @@ export default class Iris extends Drawable {
 
     }
 
-    update(model) {
+    update(model, geometry) {
 
-        this.element.setAttribute("cx", model.iris.x);
-        this.element.setAttribute("cy", model.center.y);
+        this.element.setAttribute("cx", geometry.iris.cx);
+        this.element.setAttribute("cy", geometry.iris.cy);
 
-        this.element.setAttribute("rx", model.iris.radiusX);
-        this.element.setAttribute("ry", model.iris.radiusY);
+        this.element.setAttribute("rx", geometry.iris.rx);
+        this.element.setAttribute("ry", geometry.iris.ry);
 
     }
 

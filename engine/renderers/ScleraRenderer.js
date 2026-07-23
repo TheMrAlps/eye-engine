@@ -18,15 +18,15 @@ export default class Sclera extends Drawable {
 
     }
 
-   update(model) {
+   update(model, geometry) {
 
-    this.element.setAttribute("cx", model.sclera.x);
+    this.element.setAttribute("cx", geometry.sclera.cx);
 
-    this.element.setAttribute("cy", model.sclera.y);
+    this.element.setAttribute("cy", geometry.sclera.cy);
 
-    this.element.setAttribute("rx", model.sclera.radiusX);
+    this.element.setAttribute("rx", geometry.sclera.rx);
 
-    this.element.setAttribute("ry", model.sclera.radiusY);
+    this.element.setAttribute("ry", geometry.sclera.ry);
 
 }
 

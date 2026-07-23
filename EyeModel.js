@@ -32,25 +32,31 @@ export default class EyeModel {
 
         };
 
+        this.viewport = {
 
+            width: 900,
+            height: 500,
+            padding: 50
 
-       /*
---------------------------------------------
-Sclera
---------------------------------------------
-*/
+        };
 
-this.sclera = {
+        /*
+        --------------------------------------------
+        Sclera
+        --------------------------------------------
+        */
 
-    x: 405,
+        this.sclera = {
 
-    y: 250,
+            x: 405,
 
-    radiusX: 315,
+            y: 250,
 
-    radiusY: 130
+            radiusX: 315,
 
-};
+            radiusY: 130
+
+        };
 
         /*
         --------------------------------------------
@@ -60,13 +66,11 @@ this.sclera = {
 
         this.cornea = {
 
-            radius: 36,
+            // Rendering/Layout only
 
             protrusion: 28
 
         };
-
-
 
         /*
         --------------------------------------------
@@ -84,8 +88,6 @@ this.sclera = {
 
         };
 
-
-
         /*
         --------------------------------------------
         Pupil
@@ -99,8 +101,6 @@ this.sclera = {
             radiusY: 36
 
         };
-
-
 
         /*
         --------------------------------------------
@@ -118,8 +118,6 @@ this.sclera = {
 
         };
 
-
-
         /*
         --------------------------------------------
         Vitreous Chamber
@@ -131,8 +129,6 @@ this.sclera = {
             inset: 60
 
         };
-
-
 
         /*
         --------------------------------------------
@@ -148,8 +144,6 @@ this.sclera = {
 
         };
 
-
-
         /*
         --------------------------------------------
         Optic Nerve
@@ -163,8 +157,6 @@ this.sclera = {
             width: 24
 
         };
-
-
 
         /*
         --------------------------------------------
@@ -180,15 +172,68 @@ this.sclera = {
 
         };
 
-
-
         /*
         --------------------------------------------
-        Axial Length
+        Physical Anatomy (mm)
         --------------------------------------------
         */
 
-        this.axialLength = 23.5;
+        this.anatomy = {
+
+            axialLength: 23.5,
+
+            globe: {
+
+                centerX: 12.0,
+                radiusX: 11.5,
+                radiusY: 11.5,
+                equatorialDiameter: 23.0
+
+            },
+
+            cornea: {
+
+                anteriorRadius: 7.8,
+                posteriorRadius: 6.5,
+                thickness: 0.55,
+                diameter: 11.8
+
+            },
+
+            anteriorChamberDepth: 3.0,
+
+            lens: {
+
+                thickness: 4.0,
+                anteriorRadius: 10.0,
+                posteriorRadius: 6.0,
+                equatorialRadius: 4.5
+
+            },
+
+            vitreousLength: 15.95,
+
+            iris: {
+
+                plane: 3.2,
+                radius: 5.5,
+                thickness: 0.25
+
+            },
+
+            pupil: {
+
+                radius: 2.0
+
+            },
+
+            retina: {
+
+                thickness: 0.3
+
+            }
+
+        };
 
     }
 

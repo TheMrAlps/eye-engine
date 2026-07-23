@@ -17,13 +17,13 @@ export default class Lens extends Drawable {
 
     }
 
-    update(model) {
+    update(model, geometry) {
 
-        this.element.setAttribute("cx", model.lens.x);
-        this.element.setAttribute("cy", model.center.y);
+        this.element.setAttribute("cx", geometry.lens.cx);
+        this.element.setAttribute("cy", geometry.lens.cy);
 
-        this.element.setAttribute("rx", model.lens.radiusX);
-        this.element.setAttribute("ry", model.lens.radiusY);
+        this.element.setAttribute("rx", geometry.lens.rx);
+        this.element.setAttribute("ry", geometry.lens.ry);
 
     }
 

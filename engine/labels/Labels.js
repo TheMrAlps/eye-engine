@@ -61,11 +61,10 @@ export default class Labels {
             },
             {
                 text: "Optic nerve",
-                x: geometry.projectX(
-                    model.anatomy.axialLength +
-                    model.anatomy.opticNerve.length / 2
-                ),
-                y: geometry.projectY(3.5)
+                x: geometry.opticNerve.end.x,
+                y: geometry.opticNerve.end.y +
+                    (geometry.opticNerve.endWidth / 2) +
+                    geometry.mmToPixels(0.8)
             }
         ];
 

@@ -360,7 +360,8 @@ export default class EyeGeometry {
 
             start: nerveStart,
             end: nerveEnd,
-            width: this.mmToPixels(opticNerve.radius * 2)
+            rootWidth: this.mmToPixels(opticNerve.radius * 1.1),
+            endWidth: this.mmToPixels(opticNerve.radius * 1.85)
 
         };
 
